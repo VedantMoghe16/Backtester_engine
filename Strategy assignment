@@ -13,23 +13,23 @@ def backtest_portfolio(portfolio, tickers, risk_free_rate=0.0451):
     stock_returns = pd.DataFrame(price_matrix).pct_change(axis=1).fillna(0).values
     daily_returns = np.nansum(portfolio * stock_returns, axis=0)
 
-    # ✅ Cumulative Returns
+    # Cumulative Returns
     cumulative_returns = np.cumprod(1 + daily_returns)
 
-    # ✅ Sharpe Ratio
+    # Sharpe Ratio
     sharpe_ratio = (np.mean(daily_returns) / np.std(daily_returns)) * np.sqrt(252)
 
-    # ✅ Turnover
+    # Turnover
     weight_diff = np.abs(np.diff(portfolio, axis=1))
     turnover = np.sum(weight_diff) / (n_days - 1)
 
-    # ✅ Max Drawdown
+    # Max Drawdown
     cumulative_curve = cumulative_returns
     rolling_max = np.maximum.accumulate(cumulative_curve)
     drawdown = 1 - cumulative_curve / rolling_max
     max_drawdown = np.max(drawdown)
 
-    # ✅ Correlation
+    # Correlation
     correlations = []
     for i in range(n_stocks):
         x = daily_returns
@@ -42,7 +42,7 @@ def backtest_portfolio(portfolio, tickers, risk_free_rate=0.0451):
             correlations.append(np.nan)
     mean_correlation = np.nanmean(correlations)
 
-    # ✅ Results Dictionary
+    #Results Dictionary
     results = {
         "Sharpe Ratio": sharpe_ratio,
         "Max Drawdown": max_drawdown,
@@ -53,7 +53,7 @@ def backtest_portfolio(portfolio, tickers, risk_free_rate=0.0451):
         "Cumulative Returns": cumulative_returns
     }
 
-    # ✅ Plotting
+    # Plotting
     days = np.arange(n_days)
     fig = make_subplots(rows=4, cols=1,
         subplot_titles=("Cumulative Returns", "Daily Returns", "Drawdown Curve", "Portfolio vs Top 5 Stocks"),
