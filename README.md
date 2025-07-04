@@ -62,7 +62,9 @@ Align and handle missing data across tickers and timeframes robustly.
 Built and tested 3 strategies:
 
 First TradingStrategy class uses a machine learning-based approach to predict stock returns
+
 Bollinger Bands Mean-Reversion Strategy: This strategy employs a classic technical analysis approach to identify overbought/oversold conditions
+
 Dual Moving Average Crossover
 
 
